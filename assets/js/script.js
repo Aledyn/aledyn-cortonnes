@@ -111,7 +111,7 @@ function processInput(e) {
 	}
 }
 
-inputText.addEventListener("change", processInput);
+inputText.addEventListener("keyup", processInput);
 
 btnPanelBack.addEventListener("click", () => { setCurrentPanel(curPanel - 1); });
 btnPanelForward.addEventListener("click", () => { setCurrentPanel(curPanel + 1); });
