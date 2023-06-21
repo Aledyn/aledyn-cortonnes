@@ -1,6 +1,3 @@
-const noteStorageToken = "SWTOR[IE]Notes";
-const sectionStorageToken = "SWTOR[IE]Sections";
-
 var inputText = document.getElementById("inputText");
 var outputText = document.getElementById("outputText");
 
@@ -9,10 +6,6 @@ var btnPanelForward = document.getElementById("btnPanelForward");
 var btnCopyOutput = document.getElementById("btnCopyOutput");
 
 var outputTracker = document.getElementById("outputTracker");
-
-var notesField = document.getElementById("notes");
-
-var sectionStatus = localStorage.getItem(sectionStorageToken) || 0;
 
 var textPrefix;
 var textChunks;
@@ -118,47 +111,10 @@ function processInput(e) {
 	}
 }
 
-function initializeSections() {
-	var closeButtons = document.querySelectorAll(".closeButton button");
-
-	closeButtons.forEach((element, index) => {
-		element.addEventListener("click", () => { toggleSection(index); });
-
-		if (sectionStatus & (1 << index)) {
-			toggleSection(index, false);
-		}
-	});
-}
-
-function toggleSection(index, doUpdate = true) {
-	var currentSection = document.querySelectorAll(".closeButton")[index].parentElement;
-	var currentClasses = currentSection.className.split(" ");
-
-	if (currentClasses.indexOf("closed") > -1) {
-		currentSection.className = currentClasses.filter(element => element !== "closed").join(" ");
-		currentSection.querySelector(".closeButton button").innerHTML = "-";
-
-		sectionStatus &= ~(1 << index);
-	} else {
-		currentSection.className = currentClasses.join(" ") + " closed";
-		currentSection.querySelector(".closeButton button").innerHTML = "+";
-
-		sectionStatus |= (1 << index);
-	}
-
-	if (doUpdate) {
-		localStorage.setItem(sectionStorageToken, sectionStatus);
-	}
-}
-
 inputText.addEventListener("change", processInput);
 
 btnPanelBack.addEventListener("click", () => { setCurrentPanel(curPanel - 1); });
 btnPanelForward.addEventListener("click", () => { setCurrentPanel(curPanel + 1); });
 btnCopyOutput.addEventListener("click", () => { navigator.clipboard.writeText(outputText.value); });
 
-notesField.value = localStorage.getItem(noteStorageToken);
-
-notesField.addEventListener("change", () => { localStorage.setItem(noteStorageToken, notesField.value); });
-
-initializeSections();
+// initializeSections();
