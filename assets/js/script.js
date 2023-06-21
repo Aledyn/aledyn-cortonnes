@@ -112,6 +112,7 @@ function processInput(e) {
 }
 
 inputText.addEventListener("keyup", processInput);
+inputText.addEventListener("change", processInput);
 
 btnPanelBack.addEventListener("click", () => { setCurrentPanel(curPanel - 1); });
 btnPanelForward.addEventListener("click", () => { setCurrentPanel(curPanel + 1); });
